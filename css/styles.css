@@ -1,0 +1,294 @@
+/* css/styles.css - updated with whole-block indent support */
+
+/* Basic resets and layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Helvetica", Arial, sans-serif;
+  background: #082405;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.content {
+  text-align: left;
+  color: #ffffff;
+  margin-top: 24px;
+  line-height: 1.6;
+}
+.content p {
+  max-width: 1000px;
+  margin: 0 0 1rem 0;
+}
+
+/* small note style */
+.note { color: #cfba72; margin-top: .5rem; }
+
+blockquote {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+  
+
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+a:link {
+  color: #cfba72;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #cfba72;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #cfba72;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #cfba72;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+
+/* page layout */
+.page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1 0 auto; }
+.site-footer {
+  padding: 20px;
+  text-align: center;
+  /* background: rgba(255,255,255,0.04); */
+  color: #ffffff;
+  margin-top: 32px;
+}
+
+/* two-column */
+.two-col { display: flex; gap: 24px; align-items: center; margin-top: 40px; }
+.left { flex: 0 0 40%; max-width: 420px; }
+.left img { width: 100%; height: auto; display: block; max-height: 80vh; object-fit: contain; }
+.right { flex: 1 1 0; color: #ffffff; }
+
+/* center section */
+.center-section { margin-top: 32px; padding: 20px 0; text-align: center; color: #ffffff; line-height: 1.6; }
+.center-section p { max-width: 720px; margin: 0.6em auto 0; }
+
+/* ========== NAV ========== */
+/* Make the nav row span the viewport and align contents to the right edge (Option B) */
+.site-nav .nav-inner {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc((100% - 100vw) / 2);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 32px;    /* adjust to move the right edge inward/outward */
+  justify-content: flex-end;
+  z-index: 3000;
+}
+
+/* visual order: menu left, toggle middle, brand far right */
+.menu { order: 1; }
+.nav-toggle { order: 2; }
+.brand { order: 3; }
+
+/* brand */
+.brand { font-weight: 600; text-decoration: none; color: #ffffff; }
+
+/* hamburger visuals & animation */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 3001;
+}
+.hamburger {
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: #cfba72;
+  position: relative;
+  transition: background .18s ease;
+}
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #cfba72;
+  transition: transform .22s ease, top .22s ease, opacity .18s ease;
+}
+.hamburger::before { top: -7px; }
+.hamburger::after  { top: 7px; }
+/* X animation when open */
+.site-nav.is-open .nav-toggle .hamburger { background: transparent; }
+.site-nav.is-open .nav-toggle .hamburger::before { transform: translateY(7px) rotate(45deg); }
+.site-nav.is-open .nav-toggle .hamburger::after  { transform: translateY(-7px) rotate(-45deg); }
+
+/* top-level menu (desktop) */
+.menu { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; align-items: center; }
+.menu > li { position: relative; }
+.menu a {
+  display: inline-block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #cfba72;
+  background: transparent;
+  border-radius: 6px;
+}
+
+/* hover/active */
+.menu a:hover,
+.menu a:focus,
+.menu a[aria-current="page"] {
+  background: #cfba72;
+  color: #082405;
+  text-decoration: none;
+}
+
+/* ========== MOBILE: full-screen panel ========== */
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-block; }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 64px 20px 40px 20px;
+    gap: 8px;
+    background: #082405;
+    transform: translateX(100%);
+    transition: transform .28s ease;
+    z-index: 2000;
+    overflow: auto;
+  }
+  .site-nav.is-open .menu { transform: translateX(0); }
+
+  .menu > li { border-top: 1px solid rgba(255,255,255,0.04); }
+
+  .menu a {
+    width: 100%;
+    text-align: left;
+    padding: 14px 12px;
+    font-size: 18px;
+    color: #cfba72;
+    background: transparent;
+  }
+
+  body.menu-open { overflow: hidden; }
+}
+
+/* responsive two-col */
+@media (max-width: 700px) {
+  .two-col { flex-direction: column; align-items: center; text-align: center; }
+  .left, .right { width: 100%; max-width: none; }
+  .left img { max-height: none; }
+}
+
+/* focus outlines */
+.menu a:focus, .nav-toggle:focus { outline: 2px solid #cfba72; outline-offset: 2px; }
+
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Space between images */
+  justify-content: space-between; /* Center images horizontally */
+}
+
+/* .gallery img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+} */
+
+/* .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 10px;
+  padding: 10px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+} */
+
+.gallery-item {
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery img.landscape {
+  max-width: 475px;  /* or any max width suitable for landscape images */
+}
+
+.gallery img.portrait {
+  max-width: 310px;  /* or any max width suitable for portrait images */
+}
+
+.gallery img.xwide {
+  max-width: 640px;  
+}
+
+.responsive-figure {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.responsive-figure img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#smaller-img{width:70%}
+
+.responsive-figure iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+}
+
+@supports not (aspect-ratio: 16/9) {
+  .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
+  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+}
+
+.figure-caption {
+  font-size: 14px;
+  font-style: italic;
+  color: #cfba72;
+  margin-top: 8px;
+}
+
+
+
+
