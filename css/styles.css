@@ -79,7 +79,7 @@ main { flex: 1 0 auto; }
 
 /* two-column */
 .two-col { display: flex; gap: 24px; align-items: center; margin-top: 40px; }
-.left { flex: 0 0 40%; max-width: 420px; }
+.left { flex: 0 0 40%; max-width: 460px; }
 .left img { width: 100%; height: auto; display: block; max-height: 80vh; object-fit: contain; }
 .right { flex: 1 1 0; color: #ffffff; }
 
